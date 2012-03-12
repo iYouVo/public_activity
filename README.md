@@ -1,4 +1,4 @@
-# PublicActivity ![Build Status](http://travis-ci.org/pokonski/public_activity.png)
+# PublicActivity
 
 public_activity provides smooth acitivity tracking for your ActiveRecord models in Rails 3.
 Simply put: it records what has been changed or edited and gives you the ability to present those recorded activities to users - in a similar way Github does it.
@@ -25,15 +25,12 @@ Create migration for activities (in your Rails project):
 
 Add 'tracked' to the model you want to keep track of:
 
-```ruby
     class Article < ActiveRecord::Base
       tracked
     end
-```
 
 To default the owner to the current user (optional)
-
-```ruby
+    
     #Aplication Controller
     before_filter :define_current_user
     
@@ -45,40 +42,32 @@ To default the owner to the current user (optional)
     class User < ActiveRecord::Base
       cattr_accessor :current_user
     end
-```
-
+    
 And now, by default create/update/destroy activities are recorded in activities table. 
 To display them you can do a simple query:
 
-```ruby
     # some_controller.rb
     def index
       @activities = PublicActivity::Activity.all
     end
-```
-
+    
 And in your views:
 
-```erb
     <% for activity in @activities %>
       <%= activity.text %><br/>
     <% end %>
-```
-
+    
 The only thing left is to add templates (config/pba.yml), for example:
 
-```yaml
       activity:
         article:
           create: 'Article has been created'
           update: 'Someone has edited the article'
           destroy: 'Some user removed an article!'
-```
-Place this in a file and reference it in a Rails initializer.
 
-```ruby
+Place this in a file and reference it in a rail initializer.
+
     PublicActivity::Activity.template = YAML.load_file("#{RAILS_ROOT}/config/pba.yml")
-```
 
 This is only a basic example, refer to documentation for more options and customization!
 ## Documentation
@@ -86,4 +75,4 @@ This is only a basic example, refer to documentation for more options and custom
 You can find documentation [here](http://rubydoc.info/gems/public_activity/)
 
 ## License
-Copyright (c) 2012 Piotrek Okoński, released under the MIT license
+Copyright (c) 2011 Piotrek Okoński, released under the MIT license
