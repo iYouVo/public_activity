@@ -4,6 +4,7 @@ module PublicActivity
     extend ActiveSupport::Concern
     # Instance methods used by other methods in PublicActivity module.
     module InstanceMethods
+      include IyouvoMods
       # Directly creates activity record in the database, based on supplied arguments.
       # Only first argument - key - is required.
       #
