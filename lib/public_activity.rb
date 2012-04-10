@@ -44,6 +44,7 @@ module PublicActivity
   autoload :Creation
   autoload :Update  
   autoload :Destruction
+  autoload :IyouvoMods
   autoload :VERSION
   autoload :Common
   

@@ -26,18 +26,8 @@ module PublicActivity
         end
             
         activity = self.activities.create(:key => key, :owner => owner, :parameters => params)
-        if !Pusher.app_id.nil? && !Pusher.key.nil? && !Pusher.secret.nil?
-         picture_url = ""
-         
-         if activity.trackable_type.eql?("Program") || activity.trackable_type.eql?("NpJob")
-           picture_url = activity.trackable.organization.logo.profile.url
-         elsif activity.trackable_type.eql?("Task")
-           picture_url = activity.trackable.program.organization.logo.profile.url
-         end
-            
-          Pusher['acitivty-channel'].trigger('acitivty-create', {:picture_url => picture_url, :key => key, :owner => owner, :parameters => params, 
-            :text => activity.text, :object => self})
-        end
+
+        send_to_pusher(activity, key, owner, params)
       end
 
       private
