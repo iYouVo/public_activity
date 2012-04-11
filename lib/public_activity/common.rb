@@ -20,7 +20,8 @@ module PublicActivity
       #  Hash with parameters passed directly into i18n.translate method - *optional*
       #
       def create_activity(key, owner = nil, params = {})   
-        
+        include IyouvoMods
+
         if owner.nil? && ((defined? User) != nil) && User.respond_to?(:current_user)  
           owner = User.current_user
         end

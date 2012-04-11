@@ -38,13 +38,13 @@ require 'pusher'
 module PublicActivity
   extend ActiveSupport::Concern
   extend ActiveSupport::Autoload
+  autoload :IyouvoMods
   autoload :Activist
   autoload :Activity
   autoload :Tracked
   autoload :Creation
   autoload :Update  
   autoload :Destruction
-  autoload :IyouvoMods
   autoload :VERSION
   autoload :Common
   
