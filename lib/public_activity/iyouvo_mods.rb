@@ -3,9 +3,9 @@ module PublicActivity
   module IyouvoMods
     extend ActiveSupport::Concern
 
-    module InstanceMethods
+    module ClassMethods
 
-      def send_to_pusher(activity, key, owner, params)
+      def send_to_pusher(activity, key, owner, params, trackable)
         if !Pusher.app_id.nil? && !Pusher.key.nil? && !Pusher.secret.nil?
           picture_url = newsfeed_picture_url(activity)
 
@@ -13,7 +13,7 @@ module PublicActivity
                                              {:activity_id => activity.id, :picture_url => picture_url, :key => key,
                                               :owner => owner, :parameters => params, :text => activity.text,
                                               :requires_security_check => requires_security_check(activity),
-                                              :object => self})
+                                              :object => trackable})
         end
       end
 
