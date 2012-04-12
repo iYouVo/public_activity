@@ -26,7 +26,7 @@ module PublicActivity
             
         activity = self.activities.create(:key => key, :owner => owner, :parameters => params)
 
-        send_to_pusher(activity, key, owner, params, self)
+        send_to_pusher(activity, key, owner, params)
       end
 
       private

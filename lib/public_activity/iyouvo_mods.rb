@@ -2,10 +2,8 @@ module PublicActivity
   # Module extending classes that serve as owners
   module IyouvoMods
     extend ActiveSupport::Concern
-
-    module ClassMethods
-
-      def send_to_pusher(activity, key, owner, params, trackable)
+    module InstanceMethods
+      def send_to_pusher(activity, key, owner, params)
         if !Pusher.app_id.nil? && !Pusher.key.nil? && !Pusher.secret.nil?
           picture_url = newsfeed_picture_url(activity)
 
@@ -13,10 +11,12 @@ module PublicActivity
                                              {:activity_id => activity.id, :picture_url => picture_url, :key => key,
                                               :owner => owner, :parameters => params, :text => activity.text,
                                               :requires_security_check => requires_security_check(activity),
-                                              :object => trackable})
+                                              :object => self})
         end
       end
+    end
 
+    module ClassMethods
       def newsfeed_picture_url(activity)
         case
           when activity.trackable_type.eql?("Tweet")

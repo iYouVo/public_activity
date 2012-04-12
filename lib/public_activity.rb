@@ -49,6 +49,7 @@ module PublicActivity
   autoload :Common
   
   included do
+    include IyouvoMods
     include Tracked
     include Activist 
   end  
