@@ -14,9 +14,7 @@ module PublicActivity
                                               :object => self})
         end
       end
-    end
 
-    module ClassMethods
       def newsfeed_picture_url(activity)
         case
           when activity.trackable_type.eql?("Tweet")
