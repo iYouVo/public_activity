@@ -49,7 +49,10 @@ module PublicActivity
         end
 
       def requires_security_check(activity)
-        activity.trackable_type.eql?("GroupMembership")
+        activity.trackable_type.eql?("GroupMembership")  ||
+          (activity.trackable_type.eql?("Comment") &&
+            activity.trackable.present? &&
+            activity.trackable.commentable_type.eql?("Group"))
       end
     end
   end
