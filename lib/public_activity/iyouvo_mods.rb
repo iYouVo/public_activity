@@ -52,7 +52,10 @@ module PublicActivity
         activity.trackable_type.eql?("GroupMembership")  ||
           (activity.trackable_type.eql?("Comment") &&
             activity.trackable.present? &&
-            activity.trackable.commentable_type.eql?("Group"))
+            activity.trackable.commentable_type.eql?("Group")) ||
+          (activity.trackable_type.eql?("Group") &&
+            activity.trackable.present? &&
+            !activity.trackable.community?)
       end
     end
   end
