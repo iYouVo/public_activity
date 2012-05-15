@@ -26,16 +26,25 @@ module PublicActivity
             when news_feed.trackable_type.eql?("Organization")
               url = determine_nonprofit_logo_url(news_feed.trackable.logo)
             when news_feed.trackable_type.eql?("Group")
-              if news_feed.trackable.logo.present? && news_feed.trackable.logo.profile.url != "/assets/profile_default_group_logo.png"
-                url = news_feed.trackable.logo.profile.url
-              elsif news_feed.trackable.is_collegiate?
-                url = '/assets/university-icon.png'
-              end
+              #url = determine_group_logo_url(news_feed)
+              url = news_feed.trackable.logo.profile.url
             when news_feed.owner.present?
               url = news_feed.owner.picture.thumb.url
             else
               url = ""
           end
+          url
+        end
+
+        def determine_group_logo_url(news_feed)
+          logo = news_feed.trackable.logo
+
+          if logo.present? && logo.profile.url != "/assets/profile_default_group_logo.png"
+            url = logo.profile.url
+          else
+            url = logo.profile.default_url
+          end
+
           url
         end
 
