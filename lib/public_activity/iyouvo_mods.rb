@@ -16,42 +16,42 @@ module PublicActivity
       end
 
       def newsfeed_picture_url(news_feed)
-          case
-            when news_feed.trackable_type.eql?("Tweet")
-              url = '/assets/givegab-icon.png'
-            when (news_feed.trackable_type.eql?("Program") || news_feed.trackable_type.eql?("NpJob"))
-              url = determine_nonprofit_logo_url(news_feed.trackable.organization.logo)
-            when news_feed.trackable_type.eql?("Task")
-              url = determine_nonprofit_logo_url(news_feed.trackable.program.organization.logo)
-            when news_feed.trackable_type.eql?("Organization")
-              url = determine_nonprofit_logo_url(news_feed.trackable.logo)
-            when news_feed.trackable_type.eql?("Group")
-              url = news_feed.trackable.logo.profile.url
-            when news_feed.owner.present?
-              url = news_feed.owner.picture.thumb.url
-            else
-              url = ""
-          end
-          url
-        end
-
-        def determine_nonprofit_logo_url(logo)
-          if logo.present? && logo.profile.url != "/assets/profile_default_org_logo.png"
-            url = logo.profile.url
+        case
+          when news_feed.trackable_type.eql?("Tweet")
+            url = '/assets/givegab-icon.png'
+          when (news_feed.trackable_type.eql?("Program") || news_feed.trackable_type.eql?("NpJob"))
+            url = determine_nonprofit_logo_url(news_feed.trackable.organization.logo)
+          when news_feed.trackable_type.eql?("Task")
+            url = determine_nonprofit_logo_url(news_feed.trackable.program.organization.logo)
+          when news_feed.trackable_type.eql?("Organization")
+            url = determine_nonprofit_logo_url(news_feed.trackable.logo)
+          when news_feed.trackable_type.eql?("Group")
+            url = news_feed.trackable.logo.profile.url
+          when news_feed.owner.present?
+            url = news_feed.owner.picture.thumb.url
           else
-            url = '/assets/nonprofit-icon.png'
-          end
-          url
+            url = ""
         end
+        url
+      end
+
+      def determine_nonprofit_logo_url(logo)
+        if logo.present? && logo.profile.url != "/assets/profile_default_org_logo.png"
+          url = logo.profile.url
+        else
+          url = '/assets/nonprofit-icon.png'
+        end
+        url
+      end
 
       def requires_security_check(activity)
-        activity.trackable_type.eql?("GroupMembership")  ||
-          (activity.trackable_type.eql?("Comment") &&
-            activity.trackable.present? &&
-            activity.trackable.commentable_type.eql?("Group")) ||
-          (activity.trackable_type.eql?("Group") &&
-            activity.trackable.present? &&
-            !activity.trackable.community?)
+        !activity.trackable_type.eql?("Task") &&
+          !activity.trackable_type.eql?("NpJob") &&
+          !activity.trackable_type.eql?("Picture") &&
+          !activity.trackable_type.eql?("Organization") &&
+          !activity.trackable_type.eql?("UserAchievement") &&
+          !activity.trackable_type.eql?("Tweet") &&
+          !activity.trackable_type.eql?("User")
       end
     end
   end
