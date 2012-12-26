@@ -20,11 +20,9 @@ module PublicActivity
           when news_feed.trackable_type.eql?("Tweet")
             url = '/assets/givegab-icon.png'
           when (news_feed.trackable_type.eql?("Program") || news_feed.trackable_type.eql?("NpJob"))
-            url = determine_nonprofit_logo_url(news_feed.trackable.organization.logo)
+            url = determine_nonprofit_logo_url(news_feed.trackable.group.logo)
           when news_feed.trackable_type.eql?("Task")
-            url = determine_nonprofit_logo_url(news_feed.trackable.program.organization.logo)
-          when news_feed.trackable_type.eql?("Organization")
-            url = determine_nonprofit_logo_url(news_feed.trackable.logo)
+            url = determine_nonprofit_logo_url(news_feed.trackable.program.group.logo)
           when news_feed.trackable_type.eql?("Group")
             url = news_feed.trackable.logo.profile.url
           when news_feed.owner.present?
@@ -48,7 +46,6 @@ module PublicActivity
         !activity.trackable_type.eql?("Task") &&
           !activity.trackable_type.eql?("NpJob") &&
           !activity.trackable_type.eql?("Picture") &&
-          !activity.trackable_type.eql?("Organization") &&
           !activity.trackable_type.eql?("UserAchievement") &&
           !activity.trackable_type.eql?("Tweet") &&
           !activity.trackable_type.eql?("User")
